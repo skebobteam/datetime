@@ -32,7 +32,7 @@ DateTime::DateTime(const DateTime& obj) {
 	seconds = obj.seconds;
 }
 
-long long DateTime::get_seconds() {
+long long DateTime::GetSeconds() {
 	return seconds;
 }
 

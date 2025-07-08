@@ -15,7 +15,7 @@ public:
 	int DaysInMonth(int, int) const;
 	long long SecondsSinceChrist(int, int, int) const;
 
-	long long get_seconds();
+	long long GetSeconds();
 };
 
 #endif // DATETIME_H_
