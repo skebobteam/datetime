@@ -21,8 +21,8 @@ DateTime::DateTime(int year, int month, int day) {
 		throw "Error: Incorrect month!";
 	}
 
-	if (count_days_in_month(year, month) != days) {
-		throw "Error: Incorrect number of days!";
+	if (count_days_in_month(year, month) != day) {
+		throw "Error: Incorrect day!";
 	}
 
 	seconds = SecondsSinceChrist(year, month, day);
