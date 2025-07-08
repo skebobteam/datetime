@@ -3,7 +3,19 @@
 
 class DateTime {
 private:
-long long seconds;
+	long long seconds;
+
+public:
+	DateTime();
+	DateTime(long long);
+	DateTime(int, int, int);
+	DateTime(const DateTime&);
+
+	static bool IsLeap(int);
+	static int DaysInMonth(int, int);
+	static long long SecondsSinceChrist(int, int, int);
+
+	long long GetSeconds() const;
 };
 
 #endif // DATETIME_H_
