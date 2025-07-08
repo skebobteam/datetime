@@ -11,11 +11,11 @@ public:
 	DateTime(int, int, int);
 	DateTime(const DateTime&);
 
-	bool IsLeap(int) const;
-	int DaysInMonth(int, int) const;
-	long long SecondsSinceChrist(int, int, int) const;
+	static bool IsLeap(int);
+	static int DaysInMonth(int, int);
+	static long long SecondsSinceChrist(int, int, int);
 
-	long long GetSeconds();
+	long long GetSeconds() const;
 };
 
 #endif // DATETIME_H_

@@ -21,7 +21,7 @@ DateTime::DateTime(int year, int month, int day) {
 		throw "Error: Incorrect month!";
 	}
 
-	if (DaysInMonth(year, month) != day) {
+	if (days < 1 || DaysInMonth(year, month) < day) {
 		throw "Error: Incorrect day!";
 	}
 
@@ -32,15 +32,15 @@ DateTime::DateTime(const DateTime& obj) {
 	seconds = obj.seconds;
 }
 
-long long DateTime::GetSeconds() {
+long long DateTime::GetSeconds() const {
 	return seconds;
 }
 
-bool DateTime::IsLeap(int year) const {
+bool DateTime::IsLeap(int year) {
 	return (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0));
 }
 
-int DateTime::DaysInMonth(int year, int month) const {
+int DateTime::DaysInMonth(int year, int month) {
 	if (month == 2) {
         return IsLeap(year) ? 29 : 28;
 	} else if (month == 4 || month == 6 || month == 9 || month == 11) {
@@ -50,7 +50,7 @@ int DateTime::DaysInMonth(int year, int month) const {
 	}
 }
 
-long long DateTime::SecondsSinceChrist(int year, int month, int day) const {
+long long DateTime::SecondsSinceChrist(int year, int month, int day) {
 	long long days = 0;
 
     for (int y = 1; y < year; y++) {
