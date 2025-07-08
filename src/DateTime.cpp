@@ -21,7 +21,7 @@ DateTime::DateTime(int year, int month, int day) {
 		throw "Error: Incorrect month!";
 	}
 
-	if (days < 1 || DaysInMonth(year, month) < day) {
+	if (day < 1 || DaysInMonth(year, month) < day) {
 		throw "Error: Incorrect day!";
 	}
 
