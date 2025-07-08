@@ -32,6 +32,10 @@ DateTime::DateTime(const DateTime& obj) {
 	seconds = obj.seconds;
 }
 
+long long DateTime::get_seconds() {
+	return seconds;
+}
+
 bool DateTime::IsLeap(int year) const {
 	return (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0));
 }

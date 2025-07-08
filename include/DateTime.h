@@ -14,6 +14,8 @@ public:
 	bool IsLeap(int) const;
 	int DaysInMonth(int, int) const;
 	long long SecondsSinceChrist(int, int, int) const;
+
+	long long get_seconds();
 };
 
 #endif // DATETIME_H_
