@@ -36,9 +36,9 @@ long long DateTime::GetSeconds() const {
 	return seconds;
 }
 
-bool DateTime::operator==(const DateTime& obj) {
+bool DateTime::compare(const DateTime& obj1, const DateTime& obj2) {
 	bool answer = false;
-	if (seconds == obj.seconds) {
+	if (obj1.seconds == obj2.seconds) {
 		answer = true;
 	}
 	return answer;

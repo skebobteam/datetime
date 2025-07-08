@@ -17,7 +17,7 @@ public:
 
 	long long GetSeconds() const;
 
-	bool operator==(const DateTime&);
+	static bool compare(const DateTime&, const DateTime&);
 };
 
 #endif // DATETIME_H_
