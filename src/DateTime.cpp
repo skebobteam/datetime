@@ -6,10 +6,11 @@ DateTime::DateTime() {
 
 DateTime::DateTime(long long secs) {
 	if (secs >= 0) {
-		seconds = secs; 
-	} else {
-    	throw "Error: Negative number of seconds!";
-    }
+		seconds = secs;
+	}
+	else {
+		throw "Error: Negative number of seconds!";
+	}
 }
 
 DateTime::DateTime(int year, int month, int day) {
@@ -36,32 +37,57 @@ long long DateTime::GetSeconds() const {
 	return seconds;
 }
 
+
 bool DateTime::IsLeap(int year) {
 	return (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0));
 }
 
 int DateTime::DaysInMonth(int year, int month) {
 	if (month == 2) {
-        return IsLeap(year) ? 29 : 28;
-	} else if (month == 4 || month == 6 || month == 9 || month == 11) {
-        return 30;
-	} else {
-        return 31;
+		return IsLeap(year) ? 29 : 28;
+	}
+	else if (month == 4 || month == 6 || month == 9 || month == 11) {
+		return 30;
+	}
+	else {
+		return 31;
 	}
 }
 
 long long DateTime::SecondsSinceChrist(int year, int month, int day) {
 	long long days = 0;
 
-    for (int y = 1; y < year; y++) {
-        days += IsLeap(y) ? 366 : 365;
-    }
+	for (int y = 1; y < year; y++) {
+		days += IsLeap(y) ? 366 : 365;
+	}
 
-    for (int m = 1; m < month; m++) {
-        days += DaysInMonth(m, year);
-    }
+	for (int m = 1; m < month; m++) {
+		days += DaysInMonth(m, year);
+	}
 
-    days += (day - 1);
+	days += (day - 1);
 
-    return days * 86400LL;
+	return days * 86400LL;
+}
+
+void DateTime::AddDays(int day) {
+	long long second_of_day = day * 86400LL;
+
+	if (day >= 0) {
+		seconds += second_of_day;
+	}
+	else {
+		if (seconds == 0) {
+			throw "Error: This is the beginning of the countdown that cannot be subtracted";
+		}
+		else {
+			if (seconds < second_of_day) {
+				throw "Error: Too many days deductions";
+
+			}
+			else {
+				seconds += second_of_day;
+			}
+		}
+	}
 }

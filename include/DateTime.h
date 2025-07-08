@@ -16,6 +16,7 @@ public:
 	static long long SecondsSinceChrist(int, int, int);
 
 	long long GetSeconds() const;
+	void AddDays(int day);
 };
 
 #endif // DATETIME_H_
