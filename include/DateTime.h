@@ -16,6 +16,8 @@ public:
 	static long long SecondsSinceChrist(int, int, int);
 
 	long long GetSeconds() const;
+
+	bool operator==(const DateTime&);
 };
 
 #endif // DATETIME_H_

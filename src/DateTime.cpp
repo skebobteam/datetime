@@ -36,6 +36,14 @@ long long DateTime::GetSeconds() const {
 	return seconds;
 }
 
+bool DateTime::operator==(const DateTime& obj) {
+	bool answer = false;
+	if (seconds == obj.seconds) {
+		answer = true;
+	}
+	return answer;
+}
+
 bool DateTime::IsLeap(int year) {
 	return (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0));
 }
