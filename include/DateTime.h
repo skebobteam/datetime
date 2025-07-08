@@ -7,9 +7,13 @@ private:
 
 public:
 	DateTime();
-	DateTime(long long seconds);
-	DateTime(int year, int month, int day);
-	DateTime(DateTime& datetime);
+	DateTime(long long);
+	DateTime(int, int, int);
+	DateTime(const DateTime&);
+
+	bool IsLeap(int) const;
+	int DaysInMonth(int, int) const;
+	long long SecondsSinceChrist(int, int, int) const;
 };
 
 #endif // DATETIME_H_
