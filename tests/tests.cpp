@@ -43,6 +43,11 @@ TEST(DateTimeTest, CopyConstructor) {
     EXPECT_EQ(DateTime(DateTime(20)).GetSeconds(), 20);
 }
 
+TEST(DateTimeTest, Compare) {
+    EXPECT_TRUE(DateTime::compare(DateTime(1), DateTime(1)));
+    EXPECT_FALSE(DateTime::compare(DateTime(1), DateTime(2)));
+}
+
 TEST(DateTimeTest, IsLeap) {
     EXPECT_TRUE(DateTime::IsLeap(4));
     EXPECT_FALSE(DateTime::IsLeap(3));
