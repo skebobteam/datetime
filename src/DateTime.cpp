@@ -77,6 +77,6 @@ void DateTime::AddDays(int day) {
 		seconds += second_of_day;
 	}
 	else {
-		throw "Error: Ñan't subtract that many days.";
+		throw "Error: Can't subtract that many days.";
 	}
 }
