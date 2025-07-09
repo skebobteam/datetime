@@ -9,14 +9,23 @@ public:
 	DateTime();
 	DateTime(long long);
 	DateTime(int, int, int);
+	DateTime(int, int, int, int, int, int);
 	DateTime(const DateTime&);
+
+	static void Validate(long long);
+	static void Validate(int, int, int);
+	static void Validate(int, int, int, int, int, int);
 
 	static bool IsLeap(int);
 	static int DaysInMonth(int, int);
 	static long long SecondsSinceChrist(int, int, int);
+	static long long SecondsSinceChrist(int, int, int, int, int, int);
 
 	long long GetSeconds() const;
+  
 	void AddDays(int day);
+  
+	static bool Compare(const DateTime&, const DateTime&);
 };
 
 #endif // DATETIME_H_

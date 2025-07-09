@@ -39,8 +39,37 @@ TEST(DateTimeTest, DateConstructor_InvalidDay) {
     EXPECT_ANY_THROW(DateTime(1, 4, 31));
 }
 
+TEST(DateTimeTest, FullDateConstructor_Valid) {
+    EXPECT_GT(DateTime(2, 3, 4, 5, 6, 7).GetSeconds(), 0);
+}
+
+TEST(DateTimeTest, FullDateConstructor_Throw) {
+    EXPECT_NO_THROW(DateTime(1, 1, 1, 0, 0, 0));
+    EXPECT_NO_THROW(DateTime(9999, 12, 31, 23, 59, 59));
+}
+
+TEST(DateTimeTest, FullDateConstructor_InvalidHour) {
+    EXPECT_ANY_THROW(DateTime(1, 1, 1, -1, 1, 1));
+    EXPECT_ANY_THROW(DateTime(1, 1, 1, 24, 1, 1));
+}
+
+TEST(DateTimeTest, FullDateConstructor_InvalidMinute) {
+    EXPECT_ANY_THROW(DateTime(1, 1, 1, 1, -1, 1));
+    EXPECT_ANY_THROW(DateTime(1, 1, 1, 1, 60, 1));
+}
+
+TEST(DateTimeTest, FullDateConstructor_InvalidSecs) {
+    EXPECT_ANY_THROW(DateTime(1, 1, 1, 1, 1, -1));
+    EXPECT_ANY_THROW(DateTime(1, 1, 1, 1, 1, 60));
+}
+
 TEST(DateTimeTest, CopyConstructor) {
     EXPECT_EQ(DateTime(DateTime(20)).GetSeconds(), 20);
+}
+
+TEST(DateTimeTest, Compare) {
+    EXPECT_TRUE(DateTime::Compare(DateTime(1), DateTime(1)));
+    EXPECT_FALSE(DateTime::Compare(DateTime(1), DateTime(2)));
 }
 
 TEST(DateTimeTest, IsLeap) {
@@ -62,6 +91,13 @@ TEST(DateTimeTest, SecondsSinceChrist) {
     EXPECT_EQ(DateTime::SecondsSinceChrist(1, 1, 2), 86400);
     EXPECT_EQ(DateTime::SecondsSinceChrist(1, 1, 3), 172800);
     EXPECT_EQ(DateTime::SecondsSinceChrist(1, 1, 11), 864000);
+}
+
+TEST(DateTimeTest, FullSecondsSinceChrist) {
+    EXPECT_EQ(DateTime::SecondsSinceChrist(1, 1, 1, 0, 0, 0), 0);
+    EXPECT_EQ(DateTime::SecondsSinceChrist(1, 1, 1, 1, 0, 0), 3600);
+    EXPECT_EQ(DateTime::SecondsSinceChrist(1, 1, 1, 0, 1, 0), 60);
+    EXPECT_EQ(DateTime::SecondsSinceChrist(1, 1, 1, 0, 0, 1), 1);
 }
 
 int main(int argc, char **argv) {
