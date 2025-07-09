@@ -67,6 +67,19 @@ TEST(DateTimeTest, CopyConstructor) {
     EXPECT_EQ(DateTime(DateTime(20)).GetSeconds(), 20);
 }
 
+TEST(DateTimeTest, GetWeekDay) {
+    EXPECT_EQ(DateTime(1, 1, 1).GetWeekDay(), std::string("Monday"));
+    EXPECT_EQ(DateTime(1, 1, 2).GetWeekDay(), std::string("Tuesday"));
+    EXPECT_EQ(DateTime(1, 1, 3).GetWeekDay(), std::string("Wednesday"));
+    EXPECT_EQ(DateTime(1, 1, 4).GetWeekDay(), std::string("Thursday"));
+    EXPECT_EQ(DateTime(1, 1, 5).GetWeekDay(), std::string("Friday"));
+    EXPECT_EQ(DateTime(1, 1, 6).GetWeekDay(), std::string("Saturday"));
+    EXPECT_EQ(DateTime(1, 1, 7).GetWeekDay(), std::string("Sunday"));
+    EXPECT_EQ(DateTime(1, 1, 8).GetWeekDay(), std::string("Monday"));
+    EXPECT_EQ(DateTime(1000, 2, 1).GetWeekDay(), std::string("Saturday"));
+    EXPECT_EQ(DateTime(2025, 3, 1).GetWeekDay(), std::string("Saturday"));
+}
+
 TEST(DateTimeTest, Compare) {
     EXPECT_TRUE(DateTime::Compare(DateTime(1), DateTime(1)));
     EXPECT_FALSE(DateTime::Compare(DateTime(1), DateTime(2)));
@@ -88,9 +101,9 @@ TEST(DateTimeTest, DaysInMonth) {
 
 TEST(DateTimeTest, SecondsSinceChrist) {
     EXPECT_EQ(DateTime::SecondsSinceChrist(1, 1, 1), 0);
-    EXPECT_EQ(DateTime::SecondsSinceChrist(1, 1, 2), 86400);
-    EXPECT_EQ(DateTime::SecondsSinceChrist(1, 1, 3), 172800);
-    EXPECT_EQ(DateTime::SecondsSinceChrist(1, 1, 11), 864000);
+    EXPECT_EQ(DateTime::SecondsSinceChrist(2, 1, 2), 31622400);
+    EXPECT_EQ(DateTime::SecondsSinceChrist(2, 2, 1), 34214400);
+    EXPECT_EQ(DateTime::SecondsSinceChrist(3, 1, 1), 63072000);
 }
 
 TEST(DateTimeTest, FullSecondsSinceChrist) {
@@ -100,7 +113,20 @@ TEST(DateTimeTest, FullSecondsSinceChrist) {
     EXPECT_EQ(DateTime::SecondsSinceChrist(1, 1, 1, 0, 0, 1), 1);
 }
 
-int main(int argc, char **argv) {
+TEST(DateTimeTest, AddDays_Valid) {
+    DateTime dt;
+    dt.AddDays(1);
+    EXPECT_EQ(dt.GetSeconds(), 86400);
+    dt.AddDays(-1);
+    EXPECT_EQ(dt.GetSeconds(), 0);
+}
+
+TEST(DateTimeTest, AddDays_Throw) {
+    EXPECT_ANY_THROW(DateTime(86399).AddDays(-1));
+    EXPECT_NO_THROW(DateTime(86400).AddDays(-1));
+}
+
+int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }

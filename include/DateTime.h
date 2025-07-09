@@ -3,9 +3,13 @@
 #include <ctime>
 #include <system_error>  
 
+#include <string>
+#include <stdexcept>
+
 class DateTime {
 private:
 	long long seconds;
+	static const std::string weekdays[7];
 
 public:
 	DateTime();
@@ -20,12 +24,16 @@ public:
 
 	static bool IsLeap(int);
 	static int DaysInMonth(int, int);
+	
 	static long long SecondsSinceChrist(int, int, int);
 	static long long SecondsSinceChrist(int, int, int, int, int, int);
-
+	
 	long long GetSeconds() const;
+	std::string GetWeekDay() const;
 	DateTime GetNow();
-
+  
+	void AddDays(int day);
+  
 	static bool Compare(const DateTime&, const DateTime&);
 };
 

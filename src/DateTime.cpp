@@ -1,5 +1,7 @@
 #include "DateTime.h"
 
+const std::string DateTime::weekdays[7] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+
 DateTime::DateTime() {
 	seconds = 0LL;
 }
@@ -26,52 +28,40 @@ DateTime::DateTime(const DateTime& obj) {
 	seconds = obj.seconds;
 }
 
-long long DateTime::GetSeconds() const {
-	return seconds;
-}
-
 void DateTime::Validate(long long secs) {
 	if (secs < 0) {
-    	throw "Error: Negative number of seconds!";
-    }
+		throw std::invalid_argument("Error: Negative number of seconds!");
+	}
 }
 
 void DateTime::Validate(int year, int month, int day) {
 	if (year < 1) {
-		throw "Error: Incorrect year!";
+		throw std::invalid_argument("Error: Incorrect year!");
 	}
 
 	if (month < 1 || month > 12) {
-		throw "Error: Incorrect month!";
+		throw std::invalid_argument("Error: Incorrect month!");
 	}
 
 	if (day < 1 || DaysInMonth(year, month) < day) {
-		throw "Error: Incorrect day!";
+		throw std::invalid_argument("Error: Incorrect day!");
 	}
 }
 
 void DateTime::Validate(int year, int month, int day, int hour, int minute, int secs) {
 	Validate(year, month, day);
-    
+	
 	if (hour < 0 || hour >= 24) {
-		throw "Error: Incorrect hour!";
+		throw std::invalid_argument("Error: Incorrect hour!");
 	}
 
 	if (minute < 0 || minute >= 60) {
-		throw "Error: Incorrect minute!";
+		throw std::invalid_argument("Error: Incorrect minute!");
 	}
 
 	if (secs < 0 || secs >= 60) {
-		throw "Error: Incorrect second!";
+		throw std::invalid_argument("Error: Incorrect second!");
 	}
-}
-
-bool DateTime::Compare(const DateTime& obj1, const DateTime& obj2) {
-	bool answer = false;
-	if (obj1.seconds == obj2.seconds) {
-		answer = true;
-	}
-	return answer;
 }
 
 bool DateTime::IsLeap(int year) {
@@ -80,32 +70,41 @@ bool DateTime::IsLeap(int year) {
 
 int DateTime::DaysInMonth(int year, int month) {
 	if (month == 2) {
-        return IsLeap(year) ? 29 : 28;
+		return IsLeap(year) ? 29 : 28;
 	} else if (month == 4 || month == 6 || month == 9 || month == 11) {
-        return 30;
+		return 30;
 	} else {
-        return 31;
+		return 31;
 	}
 }
 
 long long DateTime::SecondsSinceChrist(int year, int month, int day) {
 	long long days = 0;
 
-    for (int y = 1; y < year; y++) {
-        days += IsLeap(y) ? 366 : 365;
-    }
+	for (int y = 1; y < year; y++) {
+		days += IsLeap(y) ? 366 : 365;
+	}
 
-    for (int m = 1; m < month; m++) {
-        days += DaysInMonth(m, year);
-    }
+	for (int m = 1; m < month; m++) {
+		days += DaysInMonth(year, m);
+	}
 
-    days += (day - 1);
+	days += (day - 1);
 
-    return days * 86400LL;
+	return days * 86400LL;
 }
 
 long long DateTime::SecondsSinceChrist(int year, int month, int day, int hour, int minute, int secs) {
-    return SecondsSinceChrist(year, month, day) + hour * 3600LL + minute * 60LL + secs;
+	return SecondsSinceChrist(year, month, day) + hour * 3600LL + minute * 60LL + secs;
+}
+
+long long DateTime::GetSeconds() const {
+	return seconds;
+}
+
+std::string DateTime::GetWeekDay() const {
+	long long total_days = seconds / 86400LL;
+	return weekdays[(total_days + 1) % 7];
 }
 
 DateTime DateTime::GetNow() {
@@ -119,4 +118,22 @@ DateTime DateTime::GetNow() {
 		long long actual_date_in_seconds = static_cast<long long>(now_1970) + seconds_SC_to_1970;
 		return DateTime(actual_date_in_seconds);
 	}
+}
+
+void DateTime::AddDays(int day) {
+	const long long second_of_day = day * 86400LL;
+
+	if (seconds + second_of_day >= 0) {
+		seconds += second_of_day;
+	} else {
+		throw std::underflow_error("Error: Can't subtract that many days.");
+	}
+}
+
+bool DateTime::Compare(const DateTime& obj1, const DateTime& obj2) {
+	bool answer = false;
+	if (obj1.seconds == obj2.seconds) {
+		answer = true;
+	}
+	return answer;
 }
