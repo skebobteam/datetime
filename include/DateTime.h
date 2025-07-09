@@ -2,24 +2,37 @@
 #define DATETIME_H_
 
 #include <string>
+#include <stdexcept>
 
 class DateTime {
 private:
 	long long seconds;
+	static const std::string weekdays[7];
 
 public:
 	DateTime();
 	DateTime(long long);
 	DateTime(int, int, int);
+	DateTime(int, int, int, int, int, int);
 	DateTime(const DateTime&);
+
+	static void Validate(long long);
+	static void Validate(int, int, int);
+	static void Validate(int, int, int, int, int, int);
 
 	static bool IsLeap(int);
 	static int DaysInMonth(int, int);
+	
 	static long long SecondsSinceChrist(int, int, int);
-	DateTime& AddYears(int);
+	static long long SecondsSinceChrist(int, int, int, int, int, int);
 
 	long long GetSeconds() const;
 	std::string GetWeekDay() const;
+  
+	void AddDays(int day);
+	DateTime& AddYears(int);
+  
+	static bool Compare(const DateTime&, const DateTime&);
 };
 
 #endif // DATETIME_H_
