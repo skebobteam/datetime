@@ -36,6 +36,14 @@ long long DateTime::GetSeconds() const {
 	return seconds;
 }
 
+bool DateTime::compare(const DateTime& obj1, const DateTime& obj2) {
+	bool answer = false;
+	if (obj1.seconds == obj2.seconds) {
+		answer = true;
+	}
+	return answer;
+}
+
 bool DateTime::IsLeap(int year) {
 	return (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0));
 }
