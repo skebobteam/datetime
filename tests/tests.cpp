@@ -44,8 +44,8 @@ TEST(DateTimeTest, CopyConstructor) {
 }
 
 TEST(DateTimeTest, Compare) {
-    EXPECT_TRUE(DateTime::compare(DateTime(1), DateTime(1)));
-    EXPECT_FALSE(DateTime::compare(DateTime(1), DateTime(2)));
+    EXPECT_TRUE(DateTime::Compare(DateTime(1), DateTime(1)));
+    EXPECT_FALSE(DateTime::Compare(DateTime(1), DateTime(2)));
 }
 
 TEST(DateTimeTest, IsLeap) {
