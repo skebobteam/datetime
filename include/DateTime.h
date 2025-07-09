@@ -1,11 +1,13 @@
 #ifndef DATETIME_H_
 #define DATETIME_H_
 
+#include <string>
 #include <stdexcept>
 
 class DateTime {
 private:
 	long long seconds;
+	static const std::string weekdays[7];
 
 public:
 	DateTime();
@@ -25,6 +27,7 @@ public:
 	static long long SecondsSinceChrist(int, int, int, int, int, int);
 
 	long long GetSeconds() const;
+	std::string GetWeekDay() const;
   
 	void AddDays(int day);
   
