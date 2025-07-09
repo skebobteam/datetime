@@ -111,7 +111,7 @@ DateTime DateTime::GetNow() {
 	time_t now_1970 = time(nullptr);
 
 	if (now_1970 == -1) {
-		throw std::system_error(std::error_code(), "Error: Failed to get current time!");
+		throw std::runtime_error("Error: Failed to get current time!");
 	} else {
 		const long long seconds_SC_to_1970 = 62135596800LL;
 
