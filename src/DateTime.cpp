@@ -19,7 +19,7 @@ DateTime::DateTime(int year, int month, int day) {
 DateTime::DateTime(int year, int month, int day, int hour, int minute, int secs) {
 	Validate(year, month, day, hour, minute, secs);
 
-	seconds = SecondsSinceChrist(year, month, day, hor, minute, secs);
+	seconds = SecondsSinceChrist(year, month, day, hour, minute, secs);
 }
 
 DateTime::DateTime(const DateTime& obj) {
