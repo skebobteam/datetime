@@ -71,7 +71,7 @@ void DateTime::Validate(int year, int month, int day, int hour, int minute, int 
 		throw "Error: Incorrect minute!";
 	}
 
-	if (second < 0 || second >= 60) {
+	if (secs < 0 || secs >= 60) {
 		throw "Error: Incorrect second!";
 	}
 }
