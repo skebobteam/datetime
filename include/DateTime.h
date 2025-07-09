@@ -6,6 +6,7 @@
 class DateTime {
 private:
 	long long seconds;
+	static const std::string weekdays[7];
 
 public:
 	DateTime();

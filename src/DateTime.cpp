@@ -1,5 +1,7 @@
 #include "DateTime.h"
 
+const std::string DateTime::weekdays[7] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+
 DateTime::DateTime() {
 	seconds = 0LL;
 }
@@ -38,7 +40,6 @@ long long DateTime::GetSeconds() const {
 
 std::string DateTime::GetWeekDay() const {
 	long long total_days = seconds / 86400LL;
-	static const std::string weekdays[] = { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
 	return weekdays[(total_days + 1) % 7];
 }
 
