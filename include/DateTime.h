@@ -22,9 +22,9 @@ public:
 	static long long SecondsSinceChrist(int, int, int, int, int, int);
 
 	long long GetSeconds() const;
+	DateTime GetNow();
 
 	static bool Compare(const DateTime&, const DateTime&);
-	DateTime get_Now();
 };
 
 #endif // DATETIME_H_

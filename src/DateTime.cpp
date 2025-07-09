@@ -109,13 +109,12 @@ long long DateTime::SecondsSinceChrist(int year, int month, int day, int hour, i
     return SecondsSinceChrist(year, month, day) + hour * 3600LL + minute * 60LL + secs;
 }
 
-DateTime DateTime::get_Now() {
+DateTime DateTime::GetNow() {
 	time_t now_1970 = time(nullptr);
 
 	if (now_1970 == -1) {
 		throw "Failed to get current time";
-	}
-	else {
+	} else {
 		const long long seconds_SC_to_1970 = 62135596800LL;
 
 		long long actual_date_in_seconds = static_cast<long long>(now_1970) + seconds_SC_to_1970;
