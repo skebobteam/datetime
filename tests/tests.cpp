@@ -100,6 +100,19 @@ TEST(DateTimeTest, FullSecondsSinceChrist) {
     EXPECT_EQ(DateTime::SecondsSinceChrist(1, 1, 1, 0, 0, 1), 1);
 }
 
+TEST(DateTimeTest, AddDays_Valid) {
+    DateTime dt;
+    dt.AddDays(1);
+    EXPECT_EQ(dt.GetSeconds(), 86400);
+    dt.AddDays(-1);
+    EXPECT_EQ(dt.GetSeconds(), 0);
+}
+
+TEST(DateTimeTest, AddDays_Throw) {
+    EXPECT_ANY_THROW(DateTime(86399).AddDays(-1));
+    EXPECT_NO_THROW(DateTime(86400).AddDays(-1));
+}
+
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();

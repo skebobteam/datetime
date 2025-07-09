@@ -26,7 +26,9 @@ public:
 
 	long long GetSeconds() const;
 	std::string GetWeekDay() const;
-
+  
+	void AddDays(int day);
+  
 	static bool Compare(const DateTime&, const DateTime&);
 };
 
