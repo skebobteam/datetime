@@ -36,6 +36,12 @@ long long DateTime::GetSeconds() const {
 	return seconds;
 }
 
+std::string DateTime::GetWeekDay() const {
+	long long total_days = seconds / 86400LL;
+	static const std::string weekdays[] = { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
+	return weekdays[(total_days + 1) % 7];
+}
+
 bool DateTime::IsLeap(int year) {
 	return (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0));
 }
