@@ -32,27 +32,27 @@ long long DateTime::GetSeconds() const {
 
 void DateTime::Validate(long long secs) {
 	if (secs < 0) {
-    	throw std::invalid_argument("Error: Negative number of seconds!");
-    }
+		throw std::invalid_argument("Error: Negative number of seconds!");
+	}
 }
 
 void DateTime::Validate(int year, int month, int day) {
 	if (year < 1) {
-		throw std::invalid_argument("Error: Incorrect year!");
+	   throw std::invalid_argument("Error: Incorrect year!");
 	}
 
 	if (month < 1 || month > 12) {
-		throw std::invalid_argument("Error: Incorrect month!");
+	   throw std::invalid_argument("Error: Incorrect month!");
 	}
 
 	if (day < 1 || DaysInMonth(year, month) < day) {
-		throw std::invalid_argument("Error: Incorrect day!");
+	   throw std::invalid_argument("Error: Incorrect day!");
 	}
 }
 
 void DateTime::Validate(int year, int month, int day, int hour, int minute, int secs) {
 	Validate(year, month, day);
-    
+	
 	if (hour < 0 || hour >= 24) {
 		throw std::invalid_argument("Error: Incorrect hour!");
 	}
@@ -73,7 +73,6 @@ bool DateTime::Compare(const DateTime& obj1, const DateTime& obj2) {
 	}
 	return answer;
 }
-
 
 bool DateTime::IsLeap(int year) {
 	return (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0));
@@ -106,7 +105,7 @@ long long DateTime::SecondsSinceChrist(int year, int month, int day) {
 }
 
 long long DateTime::SecondsSinceChrist(int year, int month, int day, int hour, int minute, int secs) {
-    return SecondsSinceChrist(year, month, day) + hour * 3600LL + minute * 60LL + secs;
+	return SecondsSinceChrist(year, month, day) + hour * 3600LL + minute * 60LL + secs;
 }
 
 void DateTime::AddDays(int day) {
