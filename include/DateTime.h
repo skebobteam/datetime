@@ -24,6 +24,7 @@ public:
 	long long GetSeconds() const;
 
 	static bool Compare(const DateTime&, const DateTime&);
+	DateTime get_Now();
 };
 
 #endif // DATETIME_H_
