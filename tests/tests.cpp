@@ -67,6 +67,19 @@ TEST(DateTimeTest, CopyConstructor) {
     EXPECT_EQ(DateTime(DateTime(20)).GetSeconds(), 20);
 }
 
+TEST(DateTimeTest, GetWeekDay) {
+    EXPECT_EQ(DateTime(1, 1, 1).GetWeekDay(), std::string("Monday"));
+    EXPECT_EQ(DateTime(1, 1, 2).GetWeekDay(), std::string("Tuesday"));
+    EXPECT_EQ(DateTime(1, 1, 3).GetWeekDay(), std::string("Wednesday"));
+    EXPECT_EQ(DateTime(1, 1, 4).GetWeekDay(), std::string("Thursday"));
+    EXPECT_EQ(DateTime(1, 1, 5).GetWeekDay(), std::string("Friday"));
+    EXPECT_EQ(DateTime(1, 1, 6).GetWeekDay(), std::string("Saturday"));
+    EXPECT_EQ(DateTime(1, 1, 7).GetWeekDay(), std::string("Sunday"));
+    EXPECT_EQ(DateTime(1, 1, 8).GetWeekDay(), std::string("Monday"));
+    EXPECT_EQ(DateTime(1000, 2, 1).GetWeekDay(), std::string("Saturday"));
+    EXPECT_EQ(DateTime(2025, 3, 1).GetWeekDay(), std::string("Saturday"));
+}
+
 TEST(DateTimeTest, Compare) {
     EXPECT_TRUE(DateTime::Compare(DateTime(1), DateTime(1)));
     EXPECT_FALSE(DateTime::Compare(DateTime(1), DateTime(2)));
@@ -113,7 +126,7 @@ TEST(DateTimeTest, AddDays_Throw) {
     EXPECT_NO_THROW(DateTime(86400).AddDays(-1));
 }
 
-int main(int argc, char **argv) {
+int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }
