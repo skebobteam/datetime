@@ -9,6 +9,7 @@ public:
 	DateTime();
 	DateTime(long long);
 	DateTime(int, int, int);
+	DateTime(int, int, int, int, int, int);
 	DateTime(const DateTime&);
 
 	static bool IsLeap(int);

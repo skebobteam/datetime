@@ -28,6 +28,34 @@ DateTime::DateTime(int year, int month, int day) {
 	seconds = SecondsSinceChrist(year, month, day);
 }
 
+DateTime::DateTime(int year, int month, int day, int hour, int minute, int second) {
+	if (year < 0) {
+		throw "Error: Incorrect year!";
+	}
+
+	if (month < 1 || month > 12) {
+		throw "Error: Incorrect month!";
+	}
+
+	if (day < 1 || DaysInMonth(year, month) < day) {
+		throw "Error: Incorrect day!";
+	}
+
+	if (hour < 0 || hour > 23) {
+		throw "Error: Incorrect hour!";
+	}
+
+	if (minute < 0 || minute > 60) {
+		throw "Error: Incorrect minute!";
+	}
+
+	if (second < 0 || second > 60) {
+		throw "Error: Incorrect second!";
+	}
+
+	seconds = SecondsSinceChrist(year, month, day);
+}
+
 DateTime::DateTime(const DateTime& obj) {
 	seconds = obj.seconds;
 }
