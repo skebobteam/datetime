@@ -74,36 +74,47 @@ bool DateTime::Compare(const DateTime& obj1, const DateTime& obj2) {
 	return answer;
 }
 
+
 bool DateTime::IsLeap(int year) {
 	return (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0));
 }
 
 int DateTime::DaysInMonth(int year, int month) {
 	if (month == 2) {
-        return IsLeap(year) ? 29 : 28;
+		return IsLeap(year) ? 29 : 28;
 	} else if (month == 4 || month == 6 || month == 9 || month == 11) {
-        return 30;
+		return 30;
 	} else {
-        return 31;
+		return 31;
 	}
 }
 
 long long DateTime::SecondsSinceChrist(int year, int month, int day) {
 	long long days = 0;
 
-    for (int y = 1; y < year; y++) {
-        days += IsLeap(y) ? 366 : 365;
-    }
+	for (int y = 1; y < year; y++) {
+		days += IsLeap(y) ? 366 : 365;
+	}
 
-    for (int m = 1; m < month; m++) {
-        days += DaysInMonth(m, year);
-    }
+	for (int m = 1; m < month; m++) {
+		days += DaysInMonth(m, year);
+	}
 
-    days += (day - 1);
+	days += (day - 1);
 
-    return days * 86400LL;
+	return days * 86400LL;
 }
 
 long long DateTime::SecondsSinceChrist(int year, int month, int day, int hour, int minute, int secs) {
     return SecondsSinceChrist(year, month, day) + hour * 3600LL + minute * 60LL + secs;
+}
+
+void DateTime::AddDays(int day) {
+	const long long second_of_day = day * 86400LL;
+
+	if (seconds + second_of_day >= 0) {
+		seconds += second_of_day;
+	} else {
+		throw "Error: Can't subtract that many days.";
+	}
 }

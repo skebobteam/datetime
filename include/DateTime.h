@@ -22,7 +22,9 @@ public:
 	static long long SecondsSinceChrist(int, int, int, int, int, int);
 
 	long long GetSeconds() const;
-
+  
+	void AddDays(int day);
+  
 	static bool Compare(const DateTime&, const DateTime&);
 };
 
