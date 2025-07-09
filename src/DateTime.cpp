@@ -159,16 +159,12 @@ void DateTime::AddYears(int years) {
 		}
 	}
 
-	int day = remaining_days + 1;
+	int day = DaysInMonth(year, month);
 
 	year += years;
 
 	if (year < 1) { 
 		throw std::underflow_error("Error: Year cannot be less than 1!");
-	}
-
-	if (month == 2 && day == 29 && !IsLeap(year)) {
-		day = 28;
 	}
 
 	seconds = SecondsSinceChrist(year, month, day);
