@@ -147,12 +147,16 @@ void DateTime::AddYears(int years) {
 	}
 
 	int month = 1;
-	for (; month <= 12; ++month) {
+	bool month_found = false;
+	while (!month_found && month <= 12) {
 		int days_in_month = DaysInMonth(year, month);
 		if (remaining_days < days_in_month) {
-			break;
+			month_found = true;
 		}
-		remaining_days -= days_in_month;
+		else {
+			remaining_days -= days_in_month;
+			++month;
+		}
 	}
 
 	int day = remaining_days + 1;
