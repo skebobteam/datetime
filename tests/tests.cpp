@@ -88,9 +88,9 @@ TEST(DateTimeTest, DaysInMonth) {
 
 TEST(DateTimeTest, SecondsSinceChrist) {
     EXPECT_EQ(DateTime::SecondsSinceChrist(1, 1, 1), 0);
-    EXPECT_EQ(DateTime::SecondsSinceChrist(1, 1, 2), 86400);
-    EXPECT_EQ(DateTime::SecondsSinceChrist(1, 1, 3), 172800);
-    EXPECT_EQ(DateTime::SecondsSinceChrist(1, 1, 11), 864000);
+    EXPECT_EQ(DateTime::SecondsSinceChrist(2, 1, 2), 31622400);
+    EXPECT_EQ(DateTime::SecondsSinceChrist(2, 2, 1), 34214400);
+    EXPECT_EQ(DateTime::SecondsSinceChrist(3, 1, 1), 63072000);
 }
 
 TEST(DateTimeTest, FullSecondsSinceChrist) {
