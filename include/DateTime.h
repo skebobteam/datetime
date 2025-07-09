@@ -16,6 +16,7 @@ public:
 	static bool IsLeap(int);
 	static int DaysInMonth(int, int);
 	static long long SecondsSinceChrist(int, int, int);
+	DateTime& AddYears(int);
 
 	long long GetSeconds() const;
 	std::string GetWeekDay() const;
