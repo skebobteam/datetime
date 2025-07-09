@@ -105,7 +105,7 @@ DateTime& DateTime::AddYears(int years) {
 
 	year += years;
 
-	if (year < 1) { //проверка не ушли ли мы во время до н.э.
+	if (year < 1) { 
 		throw "Error: Year cannot be less than 1!";
 	}
 
