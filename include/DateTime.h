@@ -1,6 +1,8 @@
 #ifndef DATETIME_H_
 #define DATETIME_H_
 
+#include <stdexcept>
+
 class DateTime {
 private:
 	long long seconds;
@@ -18,6 +20,7 @@ public:
 
 	static bool IsLeap(int);
 	static int DaysInMonth(int, int);
+	
 	static long long SecondsSinceChrist(int, int, int);
 	static long long SecondsSinceChrist(int, int, int, int, int, int);
 
