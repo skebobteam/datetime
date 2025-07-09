@@ -1,6 +1,8 @@
 #ifndef DATETIME_H_
 #define DATETIME_H_
 
+#include <stdexcept>
+
 class DateTime {
 private:
 	long long seconds;

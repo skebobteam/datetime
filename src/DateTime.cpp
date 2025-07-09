@@ -32,21 +32,21 @@ long long DateTime::GetSeconds() const {
 
 void DateTime::Validate(long long secs) {
 	if (secs < 0) {
-    	throw "Error: Negative number of seconds!";
+    	throw std::invalid_argument("Error: Negative number of seconds!");
     }
 }
 
 void DateTime::Validate(int year, int month, int day) {
 	if (year < 1) {
-		throw "Error: Incorrect year!";
+		throw std::invalid_argument("Error: Incorrect year!");
 	}
 
 	if (month < 1 || month > 12) {
-		throw "Error: Incorrect month!";
+		throw std::invalid_argument("Error: Incorrect month!");
 	}
 
 	if (day < 1 || DaysInMonth(year, month) < day) {
-		throw "Error: Incorrect day!";
+		throw std::invalid_argument("Error: Incorrect day!");
 	}
 }
 
@@ -54,15 +54,15 @@ void DateTime::Validate(int year, int month, int day, int hour, int minute, int 
 	Validate(year, month, day);
     
 	if (hour < 0 || hour >= 24) {
-		throw "Error: Incorrect hour!";
+		throw std::invalid_argument("Error: Incorrect hour!");
 	}
 
 	if (minute < 0 || minute >= 60) {
-		throw "Error: Incorrect minute!";
+		throw std::invalid_argument("Error: Incorrect minute!");
 	}
 
 	if (secs < 0 || secs >= 60) {
-		throw "Error: Incorrect second!";
+		throw std::invalid_argument("Error: Incorrect second!");
 	}
 }
 
@@ -115,6 +115,6 @@ void DateTime::AddDays(int day) {
 	if (seconds + second_of_day >= 0) {
 		seconds += second_of_day;
 	} else {
-		throw "Error: Can't subtract that many days.";
+		throw std::underflow_error("Error: Can't subtract that many days.");
 	}
 }
