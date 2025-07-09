@@ -105,17 +105,5 @@ long long DateTime::SecondsSinceChrist(int year, int month, int day) {
 }
 
 long long DateTime::SecondsSinceChrist(int year, int month, int day, int hour, int minute, int secs) {
-	long long days = 0;
-
-    for (int y = 1; y < year; y++) {
-        days += IsLeap(y) ? 366 : 365;
-    }
-
-    for (int m = 1; m < month; m++) {
-        days += DaysInMonth(m, year);
-    }
-
-    days += (day - 1);
-
-    return days * 86400LL + hour * 3600LL + minute * 60LL + secs;
+    return SecondsSinceChrist(year, month, day) + hour * 3600LL + minute * 60LL + secs;
 }
