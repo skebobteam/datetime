@@ -12,9 +12,9 @@ public:
 	DateTime(int, int, int, int, int, int);
 	DateTime(const DateTime&);
 
-	void Validate(long long) const;
-	void Validate(int, int, int) const;
-	void Validate(int, int, int, int, int, int) const;
+	static void Validate(long long);
+	static void Validate(int, int, int);
+	static void Validate(int, int, int, int, int, int);
 
 	static bool IsLeap(int);
 	static int DaysInMonth(int, int);

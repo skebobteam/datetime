@@ -30,13 +30,13 @@ long long DateTime::GetSeconds() const {
 	return seconds;
 }
 
-void DateTime::Validate(long long secs) const {
+void DateTime::Validate(long long secs) {
 	if (secs < 0) {
     	throw "Error: Negative number of seconds!";
     }
 }
 
-void DateTime::Validate(int year, int month, int day) const {
+void DateTime::Validate(int year, int month, int day) {
 	if (year < 1) {
 		throw "Error: Incorrect year!";
 	}
@@ -50,7 +50,7 @@ void DateTime::Validate(int year, int month, int day) const {
 	}
 }
 
-void DateTime::Validate(int year, int month, int day, int hour, int minute, int secs) const {
+void DateTime::Validate(int year, int month, int day, int hour, int minute, int secs) {
 	if (year < 1) {
 		throw "Error: Incorrect year!";
 	}
