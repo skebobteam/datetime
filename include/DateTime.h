@@ -18,12 +18,15 @@ public:
 
 	static bool IsLeap(int);
 	static int DaysInMonth(int, int);
+	
 	static long long SecondsSinceChrist(int, int, int);
 	static long long SecondsSinceChrist(int, int, int, int, int, int);
-
+	
 	long long GetSeconds() const;
 	DateTime GetNow();
-
+  
+	void AddDays(int day);
+  
 	static bool Compare(const DateTime&, const DateTime&);
 };
 
