@@ -97,7 +97,7 @@ long long DateTime::SecondsSinceChrist(int year, int month, int day) {
 	}
 
 	for (int m = 1; m < month; m++) {
-		days += DaysInMonth(m, year);
+		days += DaysInMonth(year, m);
 	}
 
 	days += (day - 1);
