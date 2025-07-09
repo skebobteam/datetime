@@ -1,6 +1,8 @@
 #include "DateTime.h"
 #include <ctime>
 
+const std::string DateTime::weekdays[7] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+
 DateTime::DateTime() {
 	seconds = 0LL;
 }
@@ -29,37 +31,37 @@ DateTime::DateTime(const DateTime& obj) {
 
 void DateTime::Validate(long long secs) {
 	if (secs < 0) {
-    	throw "Error: Negative number of seconds!";
-    }
+		throw std::invalid_argument("Error: Negative number of seconds!");
+	}
 }
 
 void DateTime::Validate(int year, int month, int day) {
 	if (year < 1) {
-		throw "Error: Incorrect year!";
+		throw std::invalid_argument("Error: Incorrect year!");
 	}
 
 	if (month < 1 || month > 12) {
-		throw "Error: Incorrect month!";
+		throw std::invalid_argument("Error: Incorrect month!");
 	}
 
 	if (day < 1 || DaysInMonth(year, month) < day) {
-		throw "Error: Incorrect day!";
+		throw std::invalid_argument("Error: Incorrect day!");
 	}
 }
 
 void DateTime::Validate(int year, int month, int day, int hour, int minute, int secs) {
 	Validate(year, month, day);
-    
+	
 	if (hour < 0 || hour >= 24) {
-		throw "Error: Incorrect hour!";
+		throw std::invalid_argument("Error: Incorrect hour!");
 	}
 
 	if (minute < 0 || minute >= 60) {
-		throw "Error: Incorrect minute!";
+		throw std::invalid_argument("Error: Incorrect minute!");
 	}
 
 	if (secs < 0 || secs >= 60) {
-		throw "Error: Incorrect second!";
+		throw std::invalid_argument("Error: Incorrect second!");
 	}
 }
 
@@ -85,7 +87,7 @@ long long DateTime::SecondsSinceChrist(int year, int month, int day) {
 	}
 
 	for (int m = 1; m < month; m++) {
-		days += DaysInMonth(m, year);
+		days += DaysInMonth(year, m);
 	}
 
 	days += (day - 1);
@@ -94,11 +96,16 @@ long long DateTime::SecondsSinceChrist(int year, int month, int day) {
 }
 
 long long DateTime::SecondsSinceChrist(int year, int month, int day, int hour, int minute, int secs) {
-    return SecondsSinceChrist(year, month, day) + hour * 3600LL + minute * 60LL + secs;
+	return SecondsSinceChrist(year, month, day) + hour * 3600LL + minute * 60LL + secs;
 }
 
 long long DateTime::GetSeconds() const {
 	return seconds;
+}
+
+std::string DateTime::GetWeekDay() const {
+	long long total_days = seconds / 86400LL;
+	return weekdays[(total_days + 1) % 7];
 }
 
 DateTime DateTime::GetNow() {
@@ -120,7 +127,7 @@ void DateTime::AddDays(int day) {
 	if (seconds + second_of_day >= 0) {
 		seconds += second_of_day;
 	} else {
-		throw "Error: Can't subtract that many days.";
+		throw std::underflow_error("Error: Can't subtract that many days.");
 	}
 }
 
