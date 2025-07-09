@@ -30,7 +30,7 @@ public:
 	std::string GetWeekDay() const;
   
 	void AddDays(int day);
-	DateTime& AddYears(int);
+	void AddYears(int);
   
 	static bool Compare(const DateTime&, const DateTime&);
 };

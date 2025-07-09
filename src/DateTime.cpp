@@ -125,9 +125,9 @@ void DateTime::AddDays(int day) {
 	}
 }
 
-DateTime& DateTime::AddYears(int years) {
+void DateTime::AddYears(int years) {
 	if (years == 0) {
-		return *this;
+		return;
 	}
 
 	long long total_days = seconds / 86400LL;
@@ -135,11 +135,12 @@ DateTime& DateTime::AddYears(int years) {
 
 	int year = 1;
 	int remaining_days = total_days;
+	bool year_found = false;
 
-	while (true) {
+	while (!year_found) {
 		int days_in_year = IsLeap(year) ? 366 : 365;
 		if (remaining_days < days_in_year) {
-			break;
+			year_found = true;
 		}
 		remaining_days -= days_in_year;
 		++year;
@@ -173,6 +174,4 @@ DateTime& DateTime::AddYears(int years) {
 	if (new_weekday != weekday) {
 		throw "Error: Weekday mismatch!";
 	}
-
-	return *this;
 }
