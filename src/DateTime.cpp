@@ -38,15 +38,15 @@ void DateTime::Validate(long long secs) {
 
 void DateTime::Validate(int year, int month, int day) {
 	if (year < 1) {
-	   throw std::invalid_argument("Error: Incorrect year!");
+		throw std::invalid_argument("Error: Incorrect year!");
 	}
 
 	if (month < 1 || month > 12) {
-	   throw std::invalid_argument("Error: Incorrect month!");
+		throw std::invalid_argument("Error: Incorrect month!");
 	}
 
 	if (day < 1 || DaysInMonth(year, month) < day) {
-	   throw std::invalid_argument("Error: Incorrect day!");
+		throw std::invalid_argument("Error: Incorrect day!");
 	}
 }
 
