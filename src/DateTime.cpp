@@ -71,23 +71,12 @@ long long DateTime::SecondsSinceChrist(int year, int month, int day) {
 }
 
 void DateTime::AddDays(int day) {
-	long long second_of_day = day * 86400LL;
+	const long long second_of_day = day * 86400LL;
 
-	if (day >= 0) {
+	if (seconds + second_of_day >= 0) {
 		seconds += second_of_day;
 	}
 	else {
-		if (seconds == 0) {
-			throw "Error: This is the beginning of the countdown that cannot be subtracted";
-		}
-		else {
-			if (seconds < second_of_day) {
-				throw "Error: Too many days deductions";
-
-			}
-			else {
-				seconds += second_of_day;
-			}
-		}
+		throw "Error: Ñan't subtract that many days.";
 	}
 }
