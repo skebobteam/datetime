@@ -51,18 +51,8 @@ void DateTime::Validate(int year, int month, int day) {
 }
 
 void DateTime::Validate(int year, int month, int day, int hour, int minute, int secs) {
-	if (year < 1) {
-		throw "Error: Incorrect year!";
-	}
-
-	if (month < 1 || month > 12) {
-		throw "Error: Incorrect month!";
-	}
-
-	if (day < 1 || DaysInMonth(year, month) < day) {
-		throw "Error: Incorrect day!";
-	}
-
+	Validate(year, month, day);
+    
 	if (hour < 0 || hour >= 24) {
 		throw "Error: Incorrect hour!";
 	}
