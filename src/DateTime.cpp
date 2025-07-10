@@ -183,7 +183,7 @@ void DateTime::AddMonths(int months) {
 			throw std::underflow_error("Error: Can't subtract that many months!");
 		}
 
-		year = total_months / 12;
+		year = (total_months / 12) + 1;
 		month = (total_months % 12) + 1;
 
 		int max_day = DaysInMonth(year, month);
