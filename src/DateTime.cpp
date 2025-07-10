@@ -28,15 +28,6 @@ DateTime::DateTime(const DateTime& obj) {
 	seconds = obj.seconds;
 }
 
-long long DateTime::GetSeconds() const {
-	return seconds;
-}
-
-std::string DateTime::GetWeekDay() const {
-	long long total_days = seconds / 86400LL;
-	return weekdays[(total_days + 1) % 7];
-}
-
 void DateTime::Validate(long long secs) {
 	if (secs < 0) {
 		throw std::invalid_argument("Error: Negative number of seconds!");
@@ -73,14 +64,6 @@ void DateTime::Validate(int year, int month, int day, int hour, int minute, int 
 	}
 }
 
-bool DateTime::Compare(const DateTime& obj1, const DateTime& obj2) {
-	bool answer = false;
-	if (obj1.seconds == obj2.seconds) {
-		answer = true;
-	}
-	return answer;
-}
-
 bool DateTime::IsLeap(int year) {
 	return (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0));
 }
@@ -115,6 +98,28 @@ long long DateTime::SecondsSinceChrist(int year, int month, int day, int hour, i
 	return SecondsSinceChrist(year, month, day) + hour * 3600LL + minute * 60LL + secs;
 }
 
+long long DateTime::GetSeconds() const {
+	return seconds;
+}
+
+std::string DateTime::GetWeekDay() const {
+	long long total_days = seconds / 86400LL;
+	return weekdays[(total_days + 1) % 7];
+}
+
+DateTime DateTime::GetNow() {
+	time_t now_1970 = time(nullptr);
+
+	if (now_1970 == -1) {
+		throw std::runtime_error("Error: Failed to get current time!");
+	} else {
+		const long long seconds_SC_to_1970 = 62135596800LL;
+
+		long long actual_date_in_seconds = static_cast<long long>(now_1970) + seconds_SC_to_1970;
+		return DateTime(actual_date_in_seconds);
+	}
+}
+
 void DateTime::AddDays(int day) {
 	const long long second_of_day = day * 86400LL;
 
@@ -123,4 +128,12 @@ void DateTime::AddDays(int day) {
 	} else {
 		throw std::underflow_error("Error: Can't subtract that many days.");
 	}
+}
+
+bool DateTime::Compare(const DateTime& obj1, const DateTime& obj2) {
+	bool answer = false;
+	if (obj1.seconds == obj2.seconds) {
+		answer = true;
+	}
+	return answer;
 }

@@ -80,6 +80,16 @@ TEST(DateTimeTest, GetWeekDay) {
     EXPECT_EQ(DateTime(2025, 3, 1).GetWeekDay(), std::string("Saturday"));
 }
 
+TEST(DateTimeTest, GetNow) {
+    EXPECT_NO_THROW({
+        time_t before = static_cast<long long>(time(nullptr)) + 62135596800LL;
+        DateTime now = DateTime::GetNow();
+        time_t after = static_cast<long long>(time(nullptr)) + 62135596800LL;
+        EXPECT_GE(now.GetSeconds(), before);
+        EXPECT_LE(now.GetSeconds(), after);
+    });
+}
+
 TEST(DateTimeTest, Compare) {
     EXPECT_TRUE(DateTime::Compare(DateTime(1), DateTime(1)));
     EXPECT_FALSE(DateTime::Compare(DateTime(1), DateTime(2)));

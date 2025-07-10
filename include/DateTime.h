@@ -1,7 +1,9 @@
 #ifndef DATETIME_H_
 #define DATETIME_H_
 
+#include <ctime>
 #include <string>
+
 #include <stdexcept>
 
 class DateTime {
@@ -25,9 +27,10 @@ public:
 	
 	static long long SecondsSinceChrist(int, int, int);
 	static long long SecondsSinceChrist(int, int, int, int, int, int);
-
+	
 	long long GetSeconds() const;
 	std::string GetWeekDay() const;
+	static DateTime GetNow();
   
 	void AddDays(int day);
   
