@@ -157,8 +157,7 @@ void DateTime::AddYears(int years) {
 		int days_in_month = DaysInMonth(year, month);
 		if (remaining_days < days_in_month) {
 			month_found = true;
-		}
-		else {
+		} else {
 			remaining_days -= days_in_month;
 			++month;
 		}
@@ -179,6 +178,7 @@ void DateTime::AddYears(int years) {
 	if (new_weekday != weekday) {
 		throw "Error: Weekday mismatch!";
 	}
+}
 
 bool DateTime::Compare(const DateTime& obj1, const DateTime& obj2) {
 	bool answer = false;
