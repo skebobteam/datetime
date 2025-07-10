@@ -158,9 +158,9 @@ void DateTime::AddMonths(int months) {
 
         int day = remaining_days + 1;
 
-        int total_months = year * 12 + (month - 1) + months;
+        int total_months = (year - 1) * 12 + (month - 1) + months;
         if (total_months < 0) {
-            throw std::underflow_error("Error: total_months cannot be less than 1!");
+            throw std::underflow_error("Error: total_months cannot be negative!");
         }
 
         year = total_months / 12;
