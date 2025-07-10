@@ -27,12 +27,12 @@ DateTime::DateTime(const std::string& datetime) {
 	std::istringstream ss(datetime);
 
 	ss >> day >> dot >> month >> dot >> year;
-    ss.get(space);
-    ss >> hour >> colon >> minute >> colon >> secs;
+	ss.get(space);
+	ss >> hour >> colon >> minute >> colon >> secs;
 
-    Validate(ss);
-    Validate(year, month, day, hour, minute, secs);
-    seconds = SecondsSinceChrist(year, month, day, hour, minute, secs);
+	Validate(ss);
+	Validate(year, month, day, hour, minute, secs);
+	seconds = SecondsSinceChrist(year, month, day, hour, minute, secs);
 }
 
 DateTime::DateTime(const DateTime& obj) {
@@ -77,8 +77,8 @@ void DateTime::Validate(int year, int month, int day, int hour, int minute, int 
 
 void DateTime::Validate(const std::istringstream& ss) {
 	if (ss.fail()) {
-        throw std::runtime_error("Error: Invalid date format (DD.MM.YYYY HH:mm:ss)!");
-    }
+		throw std::runtime_error("Error: Invalid date format (DD.MM.YYYY HH:mm:ss)!");
+	}
 }
 
 bool DateTime::IsLeap(int year) {
@@ -149,53 +149,51 @@ void DateTime::AddDays(int day) {
 
 void DateTime::AddMonths(int months) {
 	if (months != 0){
-        long long total_days = seconds / 86400LL;
-        int remaining_days = total_days;
+		long long total_days = seconds / 86400LL;
+		int remaining_days = total_days;
 
-        int year = 1;
-        bool year_found = false;
-        while (!year_found) {
-            int days_in_year = IsLeap(year) ? 366 : 365;
-            if (remaining_days < days_in_year) {
-                year_found = true;
-            }
-            else {
-                remaining_days -= days_in_year;
-                ++year;
-            }
-        }
+		int year = 1;
+		bool year_found = false;
+		while (!year_found) {
+			int days_in_year = IsLeap(year) ? 366 : 365;
+			if (remaining_days < days_in_year) {
+				year_found = true;
+			} else {
+				remaining_days -= days_in_year;
+				++year;
+			}
+		}
 
-        int month = 1;
-        bool month_found = false;
-        while (!month_found && month <= 12) {
-            int days_in_month = DaysInMonth(year, month);
-            if (remaining_days < days_in_month) {
-                month_found = true;
-            }
-            else {
-                remaining_days -= days_in_month;
-                ++month;
-            }
-        }
+		int month = 1;
+		bool month_found = false;
+		while (!month_found && month <= 12) {
+			int days_in_month = DaysInMonth(year, month);
+			if (remaining_days < days_in_month) {
+				month_found = true;
+			} else {
+				remaining_days -= days_in_month;
+				++month;
+			}
+		}
 
-        int day = remaining_days + 1;
+		int day = remaining_days + 1;
 
-        int total_months = (year - 1) * 12 + (month - 1) + months;
-        if (total_months < 0) {
-            throw std::underflow_error("Error: Can't subtract that many months!");
-        }
+		int total_months = (year - 1) * 12 + (month - 1) + months;
+		if (total_months < 0) {
+			throw std::underflow_error("Error: Can't subtract that many months!");
+		}
 
-        year = total_months / 12;
-        month = (total_months % 12) + 1;
+		year = total_months / 12;
+		month = (total_months % 12) + 1;
 
-	    int max_day = DaysInMonth(year, month);
-        if (day > max_day) {
-            day = max_day;
-        }
+		int max_day = DaysInMonth(year, month);
+		if (day > max_day) {
+			day = max_day;
+		}
 
-        long long remaining_seconds = seconds % 86400LL;
+		long long remaining_seconds = seconds % 86400LL;
 
-	    seconds = SecondsSinceChrist(year, month, day) + remaining_seconds;
+		seconds = SecondsSinceChrist(year, month, day) + remaining_seconds;
 	}
 }
 
