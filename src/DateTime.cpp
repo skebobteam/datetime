@@ -176,3 +176,11 @@ void DateTime::AddMonths(int months) {
 		seconds = SecondsSinceChrist(year, month, day) + remaining_seconds;
 	}
 }
+
+bool DateTime::Compare(const DateTime& obj1, const DateTime& obj2) {
+	bool answer = false;
+	if (obj1.seconds == obj2.seconds) {
+		answer = true;
+	}
+	return answer;
+}
