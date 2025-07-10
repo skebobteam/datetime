@@ -124,3 +124,55 @@ void DateTime::AddDays(int day) {
 		throw std::underflow_error("Error: Can't subtract that many days.");
 	}
 }
+
+void DateTime::AddMonths(int months) {
+	if (months != 0){
+        long long total_days = seconds / 86400LL;
+        int remaining_days = total_days;
+
+        int year = 1;
+        bool year_found = false;
+        while (!year_found) {
+            int days_in_year = IsLeap(year) ? 366 : 365;
+            if (remaining_days < days_in_year) {
+                year_found = true;
+            }
+            else {
+                remaining_days -= days_in_year;
+                ++year;
+            }
+        }
+
+        int month = 1;
+        bool month_found = false;
+        while (!month_found && month <= 12) {
+            int days_in_month = DaysInMonth(year, month);
+            if (remaining_days < days_in_month) {
+                month_found = true;
+            }
+            else {
+                remaining_days -= days_in_month;
+                ++month;
+            }
+        }
+
+        int day = remaining_days + 1;
+
+        int total_months = year * 12 + (month - 1) + months;
+        if (total_months < 0) {
+            throw std::underflow_error("Error: total_months cannot be less than 1!");
+        }
+
+        year = total_months / 12;
+        month = (total_months % 12) + 1;
+
+	    int max_day = DaysInMonth(year, month);
+        if (day > max_day) {
+            day = max_day;
+        }
+
+        long long remaining_seconds = seconds % 86400LL;
+
+	    seconds = SecondsSinceChrist(year, month, day) + remaining_seconds;
+	}
+}

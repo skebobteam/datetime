@@ -29,7 +29,8 @@ public:
 	long long GetSeconds() const;
 	std::string GetWeekDay() const;
   
-	void AddDays(int day);
+	void AddDays(int);
+	void AddMonths(int);
   
 	static bool Compare(const DateTime&, const DateTime&);
 };
