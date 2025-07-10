@@ -31,7 +31,8 @@ DateTime::DateTime(const std::string& datetime) {
     ss >> hour >> colon >> minute >> colon >> secs;
 
     Validate(ss);
-    DateTime(year, month, day, hour, minute, secs);
+    Validate(year, month, day, hour, minute, secs);
+    seconds = SecondsSinceChrist(year, month, day, hour, minute, secs);
 }
 
 DateTime::DateTime(const DateTime& obj) {
