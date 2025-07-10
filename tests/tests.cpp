@@ -63,6 +63,19 @@ TEST(DateTimeTest, FullDateConstructor_InvalidSecs) {
     EXPECT_ANY_THROW(DateTime(1, 1, 1, 1, 1, 60));
 }
 
+TEST(DateTimeTest, StringDateConstructor_Valid) {
+    EXPECT_GT(DateTime("01.01.0001 01:01:01").GetSeconds(), 0);
+    EXPECT_EQ(DateTime("01.07.2025 18:30:45").GetSeconds(), DateTime(2025, 7, 1, 18, 30, 45).GetSeconds());
+    EXPECT_EQ(DateTime("01.01.1970 00:00:00").GetSeconds(), 62135596800LL);
+}
+
+TEST(DateTimeTest, StringDateConstructor_Throw) {
+    EXPECT_NO_THROW(DateTime("01.01.0001 01:01:01"));
+    EXPECT_ANY_THROW(DateTime("1 January 2000 00:11:22"));
+    EXPECT_ANY_THROW(DateTime("invalid string"));
+    EXPECT_ANY_THROW(DateTime(""));
+}
+
 TEST(DateTimeTest, CopyConstructor) {
     EXPECT_EQ(DateTime(DateTime(20)).GetSeconds(), 20);
 }
