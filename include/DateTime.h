@@ -30,7 +30,7 @@ public:
 	
 	long long GetSeconds() const;
 	std::string GetWeekDay() const;
-	DateTime GetNow();
+	static DateTime GetNow();
   
 	void AddDays(int day);
   
