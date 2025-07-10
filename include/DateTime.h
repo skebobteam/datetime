@@ -36,7 +36,8 @@ public:
 	std::string GetWeekDay() const;
 	static DateTime GetNow();
   
-	void AddDays(int day);
+	void AddDays(int);
+	void AddMonths(int);
   
 	static bool Compare(const DateTime&, const DateTime&);
 };
