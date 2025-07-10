@@ -25,7 +25,10 @@ DateTime::DateTime(const std::string& datetime) {
 	int day, month, year, hour, minute, secs;
 
 	std::istringstream ss(datetime);
-	ss >> day >> dot >> month >> dot >> year >> space >> hour >> colon >> minute >> colon >> secs;
+	
+	ss >> day >> dot >> month >> dot >> year;
+    ss.get(space);
+    ss >> hour >> colon >> minute >> colon >> second;
 
     Validate(ss);
     DateTime(year, month, day, hour, minute, secs);
