@@ -2,9 +2,7 @@
 
 const std::string DateTime::weekdays[7] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
 
-DateTime::DateTime() {
-	seconds = 0LL;
-}
+DateTime::DateTime() : DateTime(0LL) {}
 
 DateTime::DateTime(long long secs) {
 	Validate(secs);
@@ -14,14 +12,27 @@ DateTime::DateTime(long long secs) {
 
 DateTime::DateTime(int year, int month, int day) {
 	Validate(year, month, day);
-
 	seconds = SecondsSinceChrist(year, month, day);
 }
 
 DateTime::DateTime(int year, int month, int day, int hour, int minute, int secs) {
 	Validate(year, month, day, hour, minute, secs);
-
 	seconds = SecondsSinceChrist(year, month, day, hour, minute, secs);
+}
+
+DateTime::DateTime(const std::string& datetime) {
+	char dot, colon, space;
+	int day, month, year, hour, minute, secs;
+
+	std::istringstream ss(datetime);
+
+	ss >> day >> dot >> month >> dot >> year;
+    ss.get(space);
+    ss >> hour >> colon >> minute >> colon >> secs;
+
+    Validate(ss);
+    Validate(year, month, day, hour, minute, secs);
+    seconds = SecondsSinceChrist(year, month, day, hour, minute, secs);
 }
 
 DateTime::DateTime(const DateTime& obj) {
@@ -62,6 +73,12 @@ void DateTime::Validate(int year, int month, int day, int hour, int minute, int 
 	if (secs < 0 || secs >= 60) {
 		throw std::invalid_argument("Error: Incorrect second!");
 	}
+}
+
+void DateTime::Validate(const std::istringstream& ss) {
+	if (ss.fail()) {
+        throw std::runtime_error("Error: Invalid date format (DD.MM.YYYY HH:mm:ss)!");
+    }
 }
 
 bool DateTime::IsLeap(int year) {
