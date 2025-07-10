@@ -149,6 +149,29 @@ TEST(DateTimeTest, AddDays_Throw) {
     EXPECT_NO_THROW(DateTime(86400).AddDays(-1));
 }
 
+TEST(DateTimeTest, AddMonths_Valid1) {
+    DateTime dt(1, 1, 31, 11, 22, 33);
+    dt.AddMonths(37);
+    EXPECT_EQ(dt.GetSeconds(), DateTime(4, 2, 29, 11, 22, 33).GetSeconds());
+    dt.AddMonths(-24);
+    EXPECT_EQ(dt.GetSeconds(), DateTime(2, 2, 28, 11, 22, 33).GetSeconds());
+    dt.AddMonths(50);
+    EXPECT_EQ(dt.GetSeconds(), DateTime(6, 4, 28, 11, 22, 33).GetSeconds());
+}
+
+TEST(DateTimeTest, AddMonths_Valid2) {
+    DateTime dt(1, 1, 31, 11, 22, 33);
+    dt.AddMonths(1);
+    EXPECT_EQ(dt.GetSeconds(), DateTime(1, 2, 28, 11, 22, 33).GetSeconds());
+    dt.AddMonths(0);
+    EXPECT_EQ(dt.GetSeconds(), DateTime(1, 2, 28, 11, 22, 33).GetSeconds());
+}
+
+TEST(DateTimeTest, AddMonths_Throw) {
+    EXPECT_ANY_THROW(DateTime(5, 3, 1, 11, 22, 33).AddMonths(-51));
+    EXPECT_NO_THROW(DateTime(5, 3, 1, 11, 22, 33).AddMonths(-50));
+}
+
 int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
