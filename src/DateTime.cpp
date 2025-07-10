@@ -28,7 +28,7 @@ DateTime::DateTime(const std::string& datetime) {
 	
 	ss >> day >> dot >> month >> dot >> year;
     ss.get(space);
-    ss >> hour >> colon >> minute >> colon >> second;
+    ss >> hour >> colon >> minute >> colon >> secs;
 
     Validate(ss);
     DateTime(year, month, day, hour, minute, secs);
