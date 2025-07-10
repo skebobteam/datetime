@@ -25,7 +25,7 @@ DateTime::DateTime(const std::string& datetime) {
 	int day, month, year, hour, minute, secs;
 
 	std::istringstream ss(datetime);
-	
+
 	ss >> day >> dot >> month >> dot >> year;
     ss.get(space);
     ss >> hour >> colon >> minute >> colon >> secs;
@@ -76,7 +76,7 @@ void DateTime::Validate(int year, int month, int day, int hour, int minute, int 
 
 void DateTime::Validate(const std::istringstream& ss) {
 	if (ss.fail()) {
-        throw std::runtime_error("Invalid date format");
+        throw std::runtime_error("Error: Invalid date format (DD.MM.YYYY HH:mm:ss)!");
     }
 }
 
