@@ -174,6 +174,22 @@ void DateTime::SetSeconds(long long secs) {
 	seconds = secs;
 }
 
+std::string DateTime::ToString() const {
+	int day, month, year, hour, minute, secs, remaining = seconds % 86400;
+	std::ostringstream ss;
+
+	GetDate(year, month, day);
+	hour = remaining / 3600;
+	minute = (remaining % 3600) / 60;
+	secs = remaining % 60;
+
+	ss << std::setfill('0')
+		<< std::setw(2) << day << "." << std::setw(2) << month << "." << std::setw(4) << year << " "
+		<< std::setw(2) << hour << ":" << std::setw(2) << minute << ":" << std::setw(2) << secs;
+
+	return ss.str();
+}
+
 void DateTime::AddDays(int day) {
 	const long long second_of_day = day * 86400LL;
 

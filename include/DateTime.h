@@ -38,6 +38,8 @@ public:
 	void GetDate(int&, int&, int&) const;
 
 	void SetSeconds(long long);
+
+	std::string ToString() const;
   
 	void AddDays(int);
 	void AddMonths(int);
