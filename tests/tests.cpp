@@ -80,34 +80,6 @@ TEST(DateTimeTest, CopyConstructor) {
     EXPECT_EQ(DateTime(DateTime(20)).GetSeconds(), 20);
 }
 
-TEST(DateTimeTest, GetWeekDay) {
-    EXPECT_EQ(DateTime(1, 1, 1).GetWeekDay(), std::string("Monday"));
-    EXPECT_EQ(DateTime(1, 1, 2).GetWeekDay(), std::string("Tuesday"));
-    EXPECT_EQ(DateTime(1, 1, 3).GetWeekDay(), std::string("Wednesday"));
-    EXPECT_EQ(DateTime(1, 1, 4).GetWeekDay(), std::string("Thursday"));
-    EXPECT_EQ(DateTime(1, 1, 5).GetWeekDay(), std::string("Friday"));
-    EXPECT_EQ(DateTime(1, 1, 6).GetWeekDay(), std::string("Saturday"));
-    EXPECT_EQ(DateTime(1, 1, 7).GetWeekDay(), std::string("Sunday"));
-    EXPECT_EQ(DateTime(1, 1, 8).GetWeekDay(), std::string("Monday"));
-    EXPECT_EQ(DateTime(1000, 2, 1).GetWeekDay(), std::string("Saturday"));
-    EXPECT_EQ(DateTime(2025, 3, 1).GetWeekDay(), std::string("Saturday"));
-}
-
-TEST(DateTimeTest, GetNow) {
-    EXPECT_NO_THROW({
-        time_t before = static_cast<long long>(time(nullptr)) + 62135596800LL;
-        DateTime now = DateTime::GetNow();
-        time_t after = static_cast<long long>(time(nullptr)) + 62135596800LL;
-        EXPECT_GE(now.GetSeconds(), before);
-        EXPECT_LE(now.GetSeconds(), after);
-    });
-}
-
-TEST(DateTimeTest, Compare) {
-    EXPECT_TRUE(DateTime::Compare(DateTime(1), DateTime(1)));
-    EXPECT_FALSE(DateTime::Compare(DateTime(1), DateTime(2)));
-}
-
 TEST(DateTimeTest, IsLeap) {
     EXPECT_TRUE(DateTime::IsLeap(4));
     EXPECT_FALSE(DateTime::IsLeap(3));
@@ -134,6 +106,29 @@ TEST(DateTimeTest, FullSecondsSinceChrist) {
     EXPECT_EQ(DateTime::SecondsSinceChrist(1, 1, 1, 1, 0, 0), 3600);
     EXPECT_EQ(DateTime::SecondsSinceChrist(1, 1, 1, 0, 1, 0), 60);
     EXPECT_EQ(DateTime::SecondsSinceChrist(1, 1, 1, 0, 0, 1), 1);
+}
+
+TEST(DateTimeTest, GetWeekDay) {
+    EXPECT_EQ(DateTime(1, 1, 1).GetWeekDay(), std::string("Monday"));
+    EXPECT_EQ(DateTime(1, 1, 2).GetWeekDay(), std::string("Tuesday"));
+    EXPECT_EQ(DateTime(1, 1, 3).GetWeekDay(), std::string("Wednesday"));
+    EXPECT_EQ(DateTime(1, 1, 4).GetWeekDay(), std::string("Thursday"));
+    EXPECT_EQ(DateTime(1, 1, 5).GetWeekDay(), std::string("Friday"));
+    EXPECT_EQ(DateTime(1, 1, 6).GetWeekDay(), std::string("Saturday"));
+    EXPECT_EQ(DateTime(1, 1, 7).GetWeekDay(), std::string("Sunday"));
+    EXPECT_EQ(DateTime(1, 1, 8).GetWeekDay(), std::string("Monday"));
+    EXPECT_EQ(DateTime(1000, 2, 1).GetWeekDay(), std::string("Saturday"));
+    EXPECT_EQ(DateTime(2025, 3, 1).GetWeekDay(), std::string("Saturday"));
+}
+
+TEST(DateTimeTest, GetNow) {
+    EXPECT_NO_THROW({
+        time_t before = static_cast<long long>(time(nullptr)) + 62135596800LL;
+        DateTime now = DateTime::GetNow();
+        time_t after = static_cast<long long>(time(nullptr)) + 62135596800LL;
+        EXPECT_GE(now.GetSeconds(), before);
+        EXPECT_LE(now.GetSeconds(), after);
+    });
 }
 
 TEST(DateTimeTest, ToString) {
@@ -178,6 +173,33 @@ TEST(DateTimeTest, AddMonths_Valid2) {
 TEST(DateTimeTest, AddMonths_Throw) {
     EXPECT_ANY_THROW(DateTime(5, 3, 1, 11, 22, 33).AddMonths(-51));
     EXPECT_NO_THROW(DateTime(5, 3, 1, 11, 22, 33).AddMonths(-50));
+}
+
+TEST(DateTimeTest, AddYears_Valid1) {
+    DateTime dt(1900, 5, 15, 11, 22, 33);
+    dt.AddYears(105);
+    EXPECT_EQ(dt.GetSeconds(), DateTime(2005, 5, 15, 11, 22, 33).GetSeconds());
+    dt.AddYears(-228);
+    EXPECT_EQ(dt.GetSeconds(), DateTime(1777, 5, 15, 11, 22, 33).GetSeconds());
+}
+
+TEST(DateTimeTest, AddYears_Valid2) {
+    DateTime dt(4, 2, 29, 11, 22, 33);
+    dt.AddYears(1);
+    EXPECT_EQ(dt.GetSeconds(), DateTime(5, 2, 28, 11, 22, 33).GetSeconds());
+    dt.AddYears(0);
+    EXPECT_EQ(dt.GetSeconds(), DateTime(5, 2, 28, 11, 22, 33).GetSeconds());
+}
+
+TEST(DateTimeTest, AddYears_Throw) {
+    EXPECT_ANY_THROW(DateTime().AddYears(-1));
+    EXPECT_ANY_THROW(DateTime(5, 3, 1, 11, 22, 33).AddYears(-5));
+    EXPECT_NO_THROW(DateTime(5, 3, 1, 11, 22, 33).AddYears(-4));
+}
+
+TEST(DateTimeTest, Compare) {
+    EXPECT_TRUE(DateTime::Compare(DateTime(1), DateTime(1)));
+    EXPECT_FALSE(DateTime::Compare(DateTime(1), DateTime(2)));
 }
 
 int main(int argc, char** argv) {
