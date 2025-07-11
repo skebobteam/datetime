@@ -27,12 +27,12 @@ DateTime::DateTime(const std::string& datetime) {
 	std::istringstream ss(datetime);
 
 	ss >> day >> dot >> month >> dot >> year;
-    ss.get(space);
-    ss >> hour >> colon >> minute >> colon >> secs;
+	ss.get(space);
+	ss >> hour >> colon >> minute >> colon >> secs;
 
-    Validate(ss);
-    Validate(year, month, day, hour, minute, secs);
-    seconds = SecondsSinceChrist(year, month, day, hour, minute, secs);
+	Validate(ss);
+	Validate(year, month, day, hour, minute, secs);
+	seconds = SecondsSinceChrist(year, month, day, hour, minute, secs);
 }
 
 DateTime::DateTime(const DateTime& obj) {
@@ -77,8 +77,8 @@ void DateTime::Validate(int year, int month, int day, int hour, int minute, int 
 
 void DateTime::Validate(const std::istringstream& ss) {
 	if (ss.fail()) {
-        throw std::runtime_error("Error: Invalid date format (DD.MM.YYYY HH:mm:ss)!");
-    }
+		throw std::runtime_error("Error: Invalid date format (DD.MM.YYYY HH:mm:ss)!");
+	}
 }
 
 bool DateTime::IsLeap(int year) {
@@ -137,6 +137,57 @@ DateTime DateTime::GetNow() {
 	}
 }
 
+void DateTime::GetDate(int& year, int& month, int& day) const {
+	int remaining_days = seconds / 86400;
+	year = 1;
+	bool year_found = false;
+	while (!year_found) {
+		int days_in_year = IsLeap(year) ? 366 : 365;
+		if (remaining_days < days_in_year) {
+			year_found = true;
+		} else {
+			remaining_days -= days_in_year;
+			++year;
+		}
+	}
+
+	month = 1;
+	bool month_found = false;
+	while (!month_found && month <= 12) {
+		int days_in_month = DaysInMonth(year, month);
+		if (remaining_days < days_in_month) {
+			month_found = true;
+		} else {
+			remaining_days -= days_in_month;
+			++month;
+		}
+	}
+
+	day = remaining_days + 1;
+}
+
+void DateTime::SetSeconds(long long secs) {
+	Validate(secs);
+
+	seconds = secs;
+}
+
+std::string DateTime::ToString() const {
+	int day, month, year, hour, minute, secs, remaining = seconds % 86400;
+	std::ostringstream ss;
+
+	GetDate(year, month, day);
+	hour = remaining / 3600;
+	minute = (remaining % 3600) / 60;
+	secs = remaining % 60;
+
+	ss << std::setfill('0')
+		<< std::setw(2) << day << "." << std::setw(2) << month << "." << std::setw(4) << year << " "
+		<< std::setw(2) << hour << ":" << std::setw(2) << minute << ":" << std::setw(2) << secs;
+
+	return ss.str();
+}
+
 void DateTime::AddDays(int day) {
 	const long long second_of_day = day * 86400LL;
 
@@ -144,6 +195,30 @@ void DateTime::AddDays(int day) {
 		seconds += second_of_day;
 	} else {
 		throw std::underflow_error("Error: Can't subtract that many days.");
+	}
+}
+
+void DateTime::AddMonths(int months) {
+	if (months != 0) {
+		int year, month, day;
+		GetDate(year, month, day);
+
+		int total_months = (year - 1) * 12 + (month - 1) + months;
+		if (total_months < 0) {
+			throw std::underflow_error("Error: Can't subtract that many months!");
+		}
+
+		year = (total_months / 12) + 1;
+		month = (total_months % 12) + 1;
+
+		int max_day = DaysInMonth(year, month);
+		if (day > max_day) {
+			day = max_day;
+		}
+
+		long long remaining_seconds = seconds % 86400LL;
+
+		seconds = SecondsSinceChrist(year, month, day) + remaining_seconds;
 	}
 }
 

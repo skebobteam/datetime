@@ -136,6 +136,14 @@ TEST(DateTimeTest, FullSecondsSinceChrist) {
     EXPECT_EQ(DateTime::SecondsSinceChrist(1, 1, 1, 0, 0, 1), 1);
 }
 
+TEST(DateTimeTest, ToString) {
+    EXPECT_EQ(DateTime().ToString(), "01.01.0001 00:00:00");
+    EXPECT_EQ(DateTime("1.1.1 1:1:1").ToString(), "01.01.0001 01:01:01");
+    EXPECT_EQ(DateTime(55, 10, 5).ToString(), "05.10.0055 00:00:00");
+    EXPECT_EQ(DateTime(123, 7, 10, 5, 4, 3).ToString(), "10.07.0123 05:04:03");
+    EXPECT_EQ(DateTime("31.12.2023 23:59:59").ToString(), "31.12.2023 23:59:59");
+}
+
 TEST(DateTimeTest, AddDays_Valid) {
     DateTime dt;
     dt.AddDays(1);
@@ -147,6 +155,29 @@ TEST(DateTimeTest, AddDays_Valid) {
 TEST(DateTimeTest, AddDays_Throw) {
     EXPECT_ANY_THROW(DateTime(86399).AddDays(-1));
     EXPECT_NO_THROW(DateTime(86400).AddDays(-1));
+}
+
+TEST(DateTimeTest, AddMonths_Valid1) {
+    DateTime dt(1, 1, 31, 11, 22, 33);
+    dt.AddMonths(37);
+    EXPECT_EQ(dt.GetSeconds(), DateTime(4, 2, 29, 11, 22, 33).GetSeconds());
+    dt.AddMonths(-24);
+    EXPECT_EQ(dt.GetSeconds(), DateTime(2, 2, 28, 11, 22, 33).GetSeconds());
+    dt.AddMonths(50);
+    EXPECT_EQ(dt.GetSeconds(), DateTime(6, 4, 28, 11, 22, 33).GetSeconds());
+}
+
+TEST(DateTimeTest, AddMonths_Valid2) {
+    DateTime dt(1, 1, 31, 11, 22, 33);
+    dt.AddMonths(1);
+    EXPECT_EQ(dt.GetSeconds(), DateTime(1, 2, 28, 11, 22, 33).GetSeconds());
+    dt.AddMonths(0);
+    EXPECT_EQ(dt.GetSeconds(), DateTime(1, 2, 28, 11, 22, 33).GetSeconds());
+}
+
+TEST(DateTimeTest, AddMonths_Throw) {
+    EXPECT_ANY_THROW(DateTime(5, 3, 1, 11, 22, 33).AddMonths(-51));
+    EXPECT_NO_THROW(DateTime(5, 3, 1, 11, 22, 33).AddMonths(-50));
 }
 
 int main(int argc, char** argv) {
