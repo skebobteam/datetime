@@ -137,6 +137,12 @@ DateTime DateTime::GetNow() {
 	}
 }
 
+void DateTime::SetSeconds(long long secs) {
+	Validate(secs);
+
+	seconds = secs;
+}
+
 void DateTime::AddDays(int day) {
 	const long long second_of_day = day * 86400LL;
 
