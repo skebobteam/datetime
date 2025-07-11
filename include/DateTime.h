@@ -5,6 +5,7 @@
 
 #include <string>
 #include <sstream>
+#include <iomanip>
 
 #include <stdexcept>
 
@@ -40,10 +41,10 @@ public:
 	void SetSeconds(long long);
 
 	std::string ToString() const;
-  
+	
 	void AddDays(int);
 	void AddMonths(int);
-  
+	
 	static bool Compare(const DateTime&, const DateTime&);
 };
 

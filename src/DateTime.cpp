@@ -145,8 +145,7 @@ void DateTime::GetDate(int& year, int& month, int& day) const {
 		int days_in_year = IsLeap(year) ? 366 : 365;
 		if (remaining_days < days_in_year) {
 			year_found = true;
-		}
-		else {
+		} else {
 			remaining_days -= days_in_year;
 			++year;
 		}
@@ -158,8 +157,7 @@ void DateTime::GetDate(int& year, int& month, int& day) const {
 		int days_in_month = DaysInMonth(year, month);
 		if (remaining_days < days_in_month) {
 			month_found = true;
-		}
-		else {
+		} else {
 			remaining_days -= days_in_month;
 			++month;
 		}
