@@ -136,6 +136,14 @@ TEST(DateTimeTest, FullSecondsSinceChrist) {
     EXPECT_EQ(DateTime::SecondsSinceChrist(1, 1, 1, 0, 0, 1), 1);
 }
 
+TEST(DateTimeTest, ToString) {
+    EXPECT_EQ(DateTime().ToString(), "01.01.0001 00:00:00");
+    EXPECT_EQ(DateTime("1.1.1 1:1:1").ToString(), "01.01.0001 01:01:01");
+    EXPECT_EQ(DateTime(55, 10, 5).ToString(), "05.10.0055 00:00:00");
+    EXPECT_EQ(DateTime(123, 7, 10, 5, 4, 3).ToString(), "10.07.0123 05:04:03");
+    EXPECT_EQ(DateTime("31.12.2023 23:59:59").ToString(), "31.12.2023 23:59:59");
+}
+
 TEST(DateTimeTest, AddDays_Valid) {
     DateTime dt;
     dt.AddDays(1);
