@@ -222,6 +222,29 @@ void DateTime::AddMonths(int months) {
 	}
 }
 
+void DateTime::AddYears(int years) {
+	if (years == 0) {
+		return;
+	}
+
+	int year, month, day;
+	GetDate(year, month, day);
+
+	year += years;
+
+	if (year < 1) { 
+		throw std::underflow_error("Error: Year cannot be less than 1!");
+	}
+
+	int max_day = DaysInMonth(year, month);
+	if (day > max_day) {
+		day = max_day;
+	}
+
+	long long remaining_seconds = seconds % 86400LL;
+	seconds = SecondsSinceChrist(year, month, day) + remaining_seconds;
+}
+
 bool DateTime::Compare(const DateTime& obj1, const DateTime& obj2) {
 	bool answer = false;
 	if (obj1.seconds == obj2.seconds) {

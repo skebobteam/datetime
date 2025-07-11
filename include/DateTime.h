@@ -44,7 +44,8 @@ public:
 	
 	void AddDays(int);
 	void AddMonths(int);
-	
+	void AddYears(int);
+  
 	static bool Compare(const DateTime&, const DateTime&);
 };
 
