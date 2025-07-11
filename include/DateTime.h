@@ -35,6 +35,7 @@ public:
 	long long GetSeconds() const;
 	std::string GetWeekDay() const;
 	static DateTime GetNow();
+	void GetDate(int&, int&, int&) const;
 
 	void SetSeconds(long long);
   
