@@ -227,36 +227,8 @@ void DateTime::AddYears(int years) {
 		return;
 	}
 
-	long long total_days = seconds / 86400LL;
-
-	int year = 1;
-	int remaining_days = total_days;
-	bool year_found = false;
-
-	while (!year_found) {
-		int days_in_year = IsLeap(year) ? 366 : 365;
-		if (remaining_days < days_in_year) {
-			year_found = true;
-		}
-		else {
-			remaining_days -= days_in_year;
-			++year;
-		}
-	}
-
-	int month = 1;
-	bool month_found = false;
-	while (!month_found && month <= 12) {
-		int days_in_month = DaysInMonth(year, month);
-		if (remaining_days < days_in_month) {
-			month_found = true;
-		} else {
-			remaining_days -= days_in_month;
-			++month;
-		}
-	}
-
-	int day = remaining_days + 1;
+	int year, month, day;
+	GetDate(year, month, day);
 
 	year += years;
 
