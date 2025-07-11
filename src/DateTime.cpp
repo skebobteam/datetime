@@ -153,7 +153,6 @@ void DateTime::AddYears(int years) {
 	}
 
 	long long total_days = seconds / 86400LL;
-	int weekday = (total_days + 1) % 7;
 
 	int year = 1;
 	int remaining_days = total_days;
@@ -164,8 +163,10 @@ void DateTime::AddYears(int years) {
 		if (remaining_days < days_in_year) {
 			year_found = true;
 		}
-		remaining_days -= days_in_year;
-		++year;
+		else {
+			remaining_days -= days_in_year;
+			++year;
+		}
 	}
 
 	int month = 1;
@@ -180,7 +181,7 @@ void DateTime::AddYears(int years) {
 		}
 	}
 
-	int day = DaysInMonth(year, month);
+	int day = remaining_days + 1;
 
 	year += years;
 
@@ -188,13 +189,13 @@ void DateTime::AddYears(int years) {
 		throw std::underflow_error("Error: Year cannot be less than 1!");
 	}
 
-	seconds = SecondsSinceChrist(year, month, day);
-
-	long long new_days = seconds / 86400LL;
-	int new_weekday = (new_days + 1) % 7;
-	if (new_weekday != weekday) {
-		throw "Error: Weekday mismatch!";
+	int max_day = DaysInMonth(year, month);
+	if (day > max_day) {
+		day = max_day;
 	}
+
+	long long remaining_seconds = seconds % 86400LL;
+	seconds = SecondsSinceChrist(year, month, day) + remaining_seconds;
 }
 
 bool DateTime::Compare(const DateTime& obj1, const DateTime& obj2) {
