@@ -2,7 +2,10 @@
 #define DATETIME_H_
 
 #include <ctime>
+
 #include <string>
+#include <sstream>
+#include <iomanip>
 
 #include <stdexcept>
 
@@ -16,11 +19,13 @@ public:
 	DateTime(long long);
 	DateTime(int, int, int);
 	DateTime(int, int, int, int, int, int);
+	DateTime(const std::string&);
 	DateTime(const DateTime&);
 
 	static void Validate(long long);
 	static void Validate(int, int, int);
 	static void Validate(int, int, int, int, int, int);
+	static void Validate(const std::istringstream&);
 
 	static bool IsLeap(int);
 	static int DaysInMonth(int, int);
@@ -31,8 +36,15 @@ public:
 	long long GetSeconds() const;
 	std::string GetWeekDay() const;
 	static DateTime GetNow();
-  
-	void AddDays(int day);
+	void GetDate(int&, int&, int&) const;
+
+	void SetSeconds(long long);
+
+	std::string ToString() const;
+	
+	void AddDays(int);
+	void AddMonths(int);
+	void AddYears(int);
   
 	static bool Compare(const DateTime&, const DateTime&);
 };
