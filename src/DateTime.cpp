@@ -41,21 +41,21 @@ DateTime::DateTime(const DateTime& obj) {
 
 void DateTime::Validate(long long secs) {
 	if (secs < 0) {
-		throw std::invalid_argument("Error: Negative number of seconds!");
+		throw std::invalid_argument("Negative number of seconds!");
 	}
 }
 
 void DateTime::Validate(int year, int month, int day) {
 	if (year < 1) {
-		throw std::invalid_argument("Error: Incorrect year!");
+		throw std::invalid_argument("Incorrect year!");
 	}
 
 	if (month < 1 || month > 12) {
-		throw std::invalid_argument("Error: Incorrect month!");
+		throw std::invalid_argument("Incorrect month!");
 	}
 
 	if (day < 1 || DaysInMonth(year, month) < day) {
-		throw std::invalid_argument("Error: Incorrect day!");
+		throw std::invalid_argument("Incorrect day!");
 	}
 }
 
@@ -63,21 +63,21 @@ void DateTime::Validate(int year, int month, int day, int hour, int minute, int 
 	Validate(year, month, day);
 	
 	if (hour < 0 || hour >= 24) {
-		throw std::invalid_argument("Error: Incorrect hour!");
+		throw std::invalid_argument("Incorrect hour!");
 	}
 
 	if (minute < 0 || minute >= 60) {
-		throw std::invalid_argument("Error: Incorrect minute!");
+		throw std::invalid_argument("Incorrect minute!");
 	}
 
 	if (secs < 0 || secs >= 60) {
-		throw std::invalid_argument("Error: Incorrect second!");
+		throw std::invalid_argument("Incorrect second!");
 	}
 }
 
 void DateTime::Validate(const std::istringstream& ss) {
 	if (ss.fail()) {
-		throw std::runtime_error("Error: Invalid date format (DD.MM.YYYY HH:mm:ss)!");
+		throw std::invalid_argument("Invalid date format (DD.MM.YYYY HH:mm:ss)!");
 	}
 }
 
@@ -132,7 +132,7 @@ DateTime DateTime::GetNow() {
 	time_t now_1970 = time(nullptr);
 
 	if (now_1970 == -1) {
-		throw std::runtime_error("Error: Failed to get current time!");
+		throw std::runtime_error("Failed to get current time!");
 	} else {
 		const long long seconds_SC_to_1970 = 62135596800LL;
 
@@ -198,7 +198,7 @@ void DateTime::AddDays(int day) {
 	if (seconds + second_of_day >= 0) {
 		seconds += second_of_day;
 	} else {
-		throw std::underflow_error("Error: Can't subtract that many days.");
+		throw std::underflow_error("Can't subtract that many days.");
 	}
 }
 
@@ -209,7 +209,7 @@ void DateTime::AddMonths(int months) {
 
 		int total_months = (year - 1) * 12 + (month - 1) + months;
 		if (total_months < 0) {
-			throw std::underflow_error("Error: Can't subtract that many months!");
+			throw std::underflow_error("Can't subtract that many months!");
 		}
 
 		year = (total_months / 12) + 1;
@@ -237,7 +237,7 @@ void DateTime::AddYears(int years) {
 	year += years;
 
 	if (year < 1) { 
-		throw std::underflow_error("Error: Year cannot be less than 1!");
+		throw std::underflow_error("Year cannot be less than 1!");
 	}
 
 	int max_day = DaysInMonth(year, month);
