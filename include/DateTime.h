@@ -12,7 +12,7 @@
 class DateTime {
 private:
 	long long seconds;
-	static const std::string weekdays[7];
+	static const std::string NAMES_OF_DAYS_OF_WEEK[7];
 
 public:
 	DateTime();
@@ -34,7 +34,8 @@ public:
 	static long long SecondsSinceChrist(int, int, int, int, int, int);
 	
 	long long GetSeconds() const;
-	std::string GetWeekDay() const;
+	int GetDayOfWeek() const;
+	std::string GetNameOfDayOfWeek() const;
 	static DateTime GetNow();
 	void GetDate(int&, int&, int&) const;
 

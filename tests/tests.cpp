@@ -108,17 +108,17 @@ TEST(DateTimeTest, FullSecondsSinceChrist) {
     EXPECT_EQ(DateTime::SecondsSinceChrist(1, 1, 1, 0, 0, 1), 1);
 }
 
-TEST(DateTimeTest, GetWeekDay) {
-    EXPECT_EQ(DateTime(1, 1, 1).GetWeekDay(), std::string("Monday"));
-    EXPECT_EQ(DateTime(1, 1, 2).GetWeekDay(), std::string("Tuesday"));
-    EXPECT_EQ(DateTime(1, 1, 3).GetWeekDay(), std::string("Wednesday"));
-    EXPECT_EQ(DateTime(1, 1, 4).GetWeekDay(), std::string("Thursday"));
-    EXPECT_EQ(DateTime(1, 1, 5).GetWeekDay(), std::string("Friday"));
-    EXPECT_EQ(DateTime(1, 1, 6).GetWeekDay(), std::string("Saturday"));
-    EXPECT_EQ(DateTime(1, 1, 7).GetWeekDay(), std::string("Sunday"));
-    EXPECT_EQ(DateTime(1, 1, 8).GetWeekDay(), std::string("Monday"));
-    EXPECT_EQ(DateTime(1000, 2, 1).GetWeekDay(), std::string("Saturday"));
-    EXPECT_EQ(DateTime(2025, 3, 1).GetWeekDay(), std::string("Saturday"));
+TEST(DateTimeTest, GetNameOfDayOfWeek) {
+    EXPECT_EQ(DateTime(1, 1, 1).GetNameOfDayOfWeek(), std::string("Monday"));
+    EXPECT_EQ(DateTime(1, 1, 2).GetNameOfDayOfWeek(), std::string("Tuesday"));
+    EXPECT_EQ(DateTime(1, 1, 3).GetNameOfDayOfWeek(), std::string("Wednesday"));
+    EXPECT_EQ(DateTime(1, 1, 4).GetNameOfDayOfWeek(), std::string("Thursday"));
+    EXPECT_EQ(DateTime(1, 1, 5).GetNameOfDayOfWeek(), std::string("Friday"));
+    EXPECT_EQ(DateTime(1, 1, 6).GetNameOfDayOfWeek(), std::string("Saturday"));
+    EXPECT_EQ(DateTime(1, 1, 7).GetNameOfDayOfWeek(), std::string("Sunday"));
+    EXPECT_EQ(DateTime(1, 1, 8).GetNameOfDayOfWeek(), std::string("Monday"));
+    EXPECT_EQ(DateTime(1000, 2, 1).GetNameOfDayOfWeek(), std::string("Saturday"));
+    EXPECT_EQ(DateTime(2025, 3, 1).GetNameOfDayOfWeek(), std::string("Saturday"));
 }
 
 TEST(DateTimeTest, GetNow) {
