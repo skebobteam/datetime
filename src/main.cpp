@@ -88,7 +88,7 @@ int main()
         }
 
         case 9: {
-            std::cout << sampler.GetWeekDay();
+            std::cout << sampler.GetNameOfDayOfWeek();
             break;
         }
 
